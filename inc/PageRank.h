@@ -10,7 +10,8 @@ class PageRank{
 		
 		
 	private:
-		vector<vector<double> > in_graph;
+		vector<vector<double> > in_graph; //ESPARSA.
+		vector<vector<double> > P; //ESPARSA.
 		
 		
 		//construir la matriz estocastica por columnas (markov's chain)
