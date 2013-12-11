@@ -1,17 +1,20 @@
 #ifndef __PAGERANK_H__
 #define __PAGERANK_H__
 
+#include <iostream>
+#include <vector>
+
 class PageRank{
 	public: 
-		PageRank();
+		PageRank(istream& is);
 		power_method();
 		aitken_extrapolation();
 		quadratic_extrapolation();
 		
 		
 	private:
-		vector<vector<double> > in_graph; //ESPARSA.
-		vector<vector<double> > P; //ESPARSA.
+		SparseMatrix *in_graph; //ESPARSA. connection graph
+		// vector<vector<double> > P; //ESPARSA.		La formamos modificando in_graph
 		
 		
 		//construir la matriz estocastica por columnas (markov's chain)
