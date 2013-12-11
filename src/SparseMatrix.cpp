@@ -1,5 +1,7 @@
 #include "../inc/SparseMatrix.h"
 
+using namespace std;
+
 SparseMatrix::SparseMatrix(istream& is){
 	is >> n;			//num paginas
 	is >> cant_nonzero;	//num links
@@ -14,67 +16,80 @@ SparseMatrix::SparseMatrix(istream& is){
 		is >> p_src;
 		is >> p_dst; 
 		//queremos hallar W tq wij = 1 si la pagina j tiene un link a la pagina i
-		//construimos primero W transpuesta pues los datos de entrada nos vienen perfecto para eso
+		//construimos primero W traspuesta pues los datos de entrada nos vienen perfecto para eso
+		
 		//ignoramos autolinks
+		
 		if(p_src != p_dst){				///en teoria se cumple siempre
 			//SparseMatrix[p_src-1][p_dst-1] = 1
 			pair<double,int> val = make_pair(1.0,p_dst-1);
 			vil[p_src-1].push_back(val);
 		}
 	}
+}
+
+double SparseMatrix::elem(int i, int j){
+	if(vil[i].empty()) return 0.0;
+	for (list<pair<double,int> >::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
+		if((*it).second == j) return (*it).first;
+	}
+	return 0.0;
+}
+
+void SparseMatrix::trasponer(){
+	vector<list<pair<double, int> > >* vil_t = new vector<list<pair<double, int> > >();
+	list<pair<double,int> > l;
+	for(int i = 0; i < n; i++){
+		vil_t->push_back(l);			//inicializo todas las filas como vacias.
+	}
 	
-	/*
-//	for(int i = 0; i < n; i++){
-//		outdegree.push_back(0);		//inicializo outdegree para cada pag
-//	}
-	outdegree = vector<int>(n,0);
-	
-	int p_src, p_dst;	//existe link de p_src a p_dst
-	int p_anterior = -999;
-		
-	for (int i = 0; i < cant_nonzero; i++){	//para cada link
-		is >> p_src;
-		is >> p_dst; 
-		//queremos hallar W tq wij = 1 si la pagina j tiene un link a la pagina i
-		//construimos primero W transpuesta pues los datos de entrada nos vienen perfecto para eso
-		//ignoramos autolinks
-		if(p_src != p_dst){
-			//SM[p_src-1][p_dst-1] = 1
-			outdegree[p_src-1]++; 
-			
-			values.push_back(1);
-			if(p_anterior != p_src){
-				rowIndex.push_back(values.length()-1);
-			}
-			columns.push_back(p_dst-1);
-			
-			p_anterior = p_src;
+	for(int i = 0; i < n; i++){
+		for (list<pair<double,int> >::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
+			(*vil_t)[(*it).second].push_back(make_pair((*it).first,i));
 		}
 	}
-	rowIndex.push_back(cant_nonzero); //primer y ultimo valor hardcodeados
-	*/
+	vil = *vil_t;
+	delete vil_t;
 }
 
-double& elem(int i, int j){
-	if(vil[i].empty()) return 0;
-	for (list<int>::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
-		if(*it.second = j) return *it.first;
+vector<double> SparseMatrix::multiplicarXvector(vector<double>& v){ 
+	vector<double> res;
+	double xi = 0;
+	for(int i = 0; i < n; i++){
+		for (list<pair<double,int> >::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
+			xi = xi + ((*it).first * v[(*it).second]);
+		}
+		res.push_back(xi);
+		xi = 0;
 	}
-	return 0;
-}
-
-void SparseMatrix::transponer(){
-	
-	
-}
-
-vector<double> SparseMatrix::multiplicarXvector(vector<double> v){ 
-
-
-
+	return res;
 }
 
 
 void SparseMatrix::multiplicarXescalar(double x){
-
+	for(int i = 0; i < n; i++){
+		for (list<pair<double,int> >::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
+			(*it).first = (*it).first * x;
+		}
+	}
 }
+
+void SparseMatrix::calcularP(){
+	for(int i = 0; i < n; i++){
+		double nj = (double) vil[i].size();
+		for (list<pair<double,int> >::iterator it = vil[i].begin(); it != vil[i].end(); ++it){
+			(*it).first = (*it).first / nj;
+		}
+	}
+}
+
+void SparseMatrix::mostrar(ostream& os){
+	for(int i = 0; i < n; i++){
+		os << "[ ";
+		for(int j = 0; j < n; j++){
+			os << "| " << elem(i,j) << " |";
+		}
+		os << " ]" << endl;
+	}
+	os << endl;
+}	

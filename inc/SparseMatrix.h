@@ -4,16 +4,17 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include <pair>
+#include <utility>
 
 class SparseMatrix{
 	public:
-		SparseMatrix(istream& is);
-		double& elem(int i, int j);
-		void transponer();
-		vector<double> multiplicarXvector(vector<double> v);
+		SparseMatrix(std::istream& is);
+		double elem(int i, int j);
+		void trasponer();
+		std::vector<double> multiplicarXvector(std::vector<double>& v);
 		void multiplicarXescalar(double x);
-		
+		void mostrar(std::ostream& os);
+		void calcularP();
 		
 	private:
 		//vector<double> values;
@@ -24,7 +25,7 @@ class SparseMatrix{
 		
 		//vector<int> outdegree;
 		
-		vector<list<pair<double, int> > > vil;
+		std::vector<std::list<std::pair<double, int> > > vil;
 };
 
 
