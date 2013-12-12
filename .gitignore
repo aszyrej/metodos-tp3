@@ -3,7 +3,7 @@
 *.o
 
 #[Latex residue]#
-*.pdf
+informe.pdf
 *.log
 *.aux
 *.bib
