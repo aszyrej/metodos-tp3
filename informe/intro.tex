@@ -1,0 +1,53 @@
+El algoritmo PageRank se basa en la construcci\'on de un modelo probabil\'istico en base a una red de p\'aginas. Definimos una red de p\'aginas como un conjunto de $n$ p\'aginas y donde hay v\'inculos o links que las unen de forma unidireccional. Esto significa que puedo ir desde la p\'agina $i$ a la p\'agina $j$ si existe un link desde la p\'agina $i$ a la $j$. Dichos links se ven reflejados en lo que llamamos matriz de conectividad $W \in \{0,1\}^{n\times n}$. Diremos entonces que:
+
+\[ w_{ij} =
+\begin{cases}
+	1 & \text{si existe un link desde la p\'agina $j$ a la $i$ }\\
+	0 & \text{si no}
+\end{cases}
+\]
+
+Adem\'as afirmamos que no existen links de una p\'agina a s\'i misma, de modo que en la diagonal de $W$ hay siempre 0. Con la informaci\'on de esta matriz podemos obtener cuantos links salen desde la p\'agina $i$ viendo la columna $i$ de $W$ y sumando todos los valores. Entonces definimos como grado de p\'agina $n_{k}$  donde:
+
+\[ n_{k} = ||columna_{k}(W)||_{1}\]
+
+Lo importante de este modelo es poder asignarle a cada p\'agina un puntaje, un valor que la distinga de las dem\'as. Diremos que una p\'agina es m\'as importante que otra si tiene un puntaje mayor. Una forma de lograr esto es decir que el puntaje de una p\'agina $i$ es igual a la cantidad de links de llegada a la p\'agina. Esto trae un problema, as\'i que buscamos una manera para que tambi\'en influya la importancia de la p\'agina que posee el link a la p\'agina $i$. Para resolver esto pedimos que, para $k = 1,...,n$:
+
+
+\[ x_{k} = \sum_{j\in L_{k}}\frac{x_{j}}{n_{j}} \] donde $L_{k}$ es el conjunto de las p\'aginas que tienen un link a la p\'agina $k$. En principio estos valores no son conocidos pero veremos m\'as adelante c\'omo calcularlos.
+
+Entonces definimos $P \in \mathbb{R}^{n\times n}$ de la siguente manera:
+
+\[ p_{ij} =
+\begin{cases}
+	\frac{1}{n_{j}} & \text{si } w_{ij}\\
+	0 & \text{si no}
+\end{cases}
+\]
+
+Para poder utilizar un an\'alisis probabil\'istico necesitamos que todas las p\'aginas tengan links salientes, a fin de evitar quedarse atascado en una p\'agina. Para lograr esto definimos $v \in \mathbb{R}^{n}$ y $d \in \{0,1\}^{n}$ tal que:
+
+\[ v_{i} = \frac{1}{n} \text{ para } i = 1, \dots, n\]
+
+\[ d_{i} = \\
+	\begin{cases}
+		1 & \text{si } n_{i} = 0\\
+		0 & \text{sino}
+	\end{cases}
+\]
+ 
+De modo que la nueva matriz que contempla el caso de los links colgantes queda constru\'ida de la siguente manera:
+
+\[ P_{1} = P + vd^{t}\]
+
+Otro fen\'omeno que nos gustar\'ia contemplar es el del \emph{teletransportaci\'on}. Esto implica que desde una p\'agina puede saltarse a cualquier otra p\'agina independientemente de los vecinos de la p\'agina actual. Esto viene asociado con una probabilidad $c \in [0,1]$ tal que el modelo resultante es:
+
+\begin{align*}
+	E &= v[1]^{t}\\
+	P_{2} &= cP_{1} + (1-c)E
+\end{align*}
+
+Se puede observar que $P_{2}$, al igual que $P_{1}$ es estoc\'asitica por columnas y por lo tanto cumple las hip\'otesis planteadas en Bryan y Leise\cite{Bryan2006} y Kamvar et al.\cite{Kamvar2003} , y por esta raz\'on $P_{2}$ tiene un autovector asociado a un autovalor $\lambda_{1} = 1$ y tal que $\lambda_{1} > |\lambda_{2}| > \dots |\lambda_{n}|$. De esta manera se puede utilizar el sistema $P_{2}x = x$ para hallar dicho autovector.
+
+
+Veremos entonces que podemos utilizar el m\'etodo de la potencia para hallar ese autovector ya que dicho autovector est\'a asociado al autovalor m\'aximo de $P_{2}$. Luego, por la secci\'on 5.2 se puede observar que realizar el c\'alculo para m\'etodo de la potencia es equivalente a realizar el procedimiento ah\'i explicado. Realizar el c\'alculo de esa forma es conveniente ya que aprovecha que la matriz $P_{2}$ proviene de una matriz esparsa $P$.

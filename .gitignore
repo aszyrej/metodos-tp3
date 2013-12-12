@@ -1,0 +1,18 @@
+#[Compiled Sources]#
+
+*.o
+
+#[Latex residue]#
+*.pdf
+*.log
+*.aux
+*.bib
+*.*~
+*.bbl
+*.blg
+*.toc
+*.out
+*.backup
+
+#[Misc]#
+.directory

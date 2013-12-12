@@ -1,3 +1,33 @@
+\subsection{Enunciado}
+
+El objetivo del trabajo es implementar el algoritmo PageRank, considerando dos m\'etodos distintos para el c\'alculo del
+autovector principal de la matriz $P_2$. Para ello, se considera el entorno de aplicaci\'on real del algoritmo, donde el
+n\'umero total de p\'aginas, $n$, es considerablemente grande (i.e., todas las p\'aginas web accesibles p\'ublicamente).
+El programa tomar\'a como entrada un archivo con la representaci\'on de grafo de conectividad, construir\'a la matriz
+$P_2$ definida en la secci\'on anterior y ejecutar\'a el algoritmo PageRank utilizando el m\'etodo de la potencia y una 
+variante del mismo para distintas instancias de prueba. Se pide:
+
+\begin{enumerate}
+\item En base a su definici\'on, $P_2$ no es una matriz esparsa. Sin embargo, en Kamvar et al. \cite[Algoritmo
+1]{Kamvar2003} se propone una forma alternativa para computar $x^{(k+1)} = P_2 x^{(k)}$. Mostrar que el c\'omputo
+propuesto es equivalente. Utilizarlo para mejorar el espacio requerido en memoria para el almacenamiento de la matriz
+$P_2$ y el tiempo de ejecuci\'on requerido para hacer la multiplicaci\'on entre matrices y vectores. 
+
+\item Bas\'andose en el an\'alisis del punto anterior, implementar el m\'etodo de la potencia para calcular el
+autovector principal de la matriz $P_2$.
+
+\item Implementar la variante del M\'etodo de la Potencia propuesta en Kamvar et al. \cite[Secci\'on 5]{Kamvar2003},
+denominada Extrapolaci\'on Cuadr\'atica. El m\'etodo de Cuadrados M\'inimos involucrado debe ser resuelto utilizando la
+Factorizaci\'on QR de la matriz mediante alguno de los m\'etodos vistos en la materia.
+
+\item Realizar experimentos considerando distintas instancias de prueba. Para ello, se podr\'a utilizar el c\'odigo
+adjuntada para la generaci\'on de instancias en base a datos reales, o cualquier otra herramienta que el grupo considere
+necesaria. Evaluar tambi\'en los algoritmos alguno de los conjuntos de instancias
+provistos en \cite{SNAP}. Para cada algoritmo, analizar el tiempo de
+ejecuci\'on, la evoluci\'on del error entre iteraciones consecutivas y considerar distintos criterios de parada. 
+Adem\'as, analizar la calidad del ordenamiento obtenido en t\'erminos de la relevancia de las p\'aginas.
+\end{enumerate}
+
 \subsection{Correctitud del Algoritmo 1 de Kamvar} 
 Seg\'un Kamvar et al. se puede reducir el problema de $(P_{2})x = y$ a realizar el siguiente c\'alculo:
 
@@ -73,5 +103,4 @@ Segundo lado de la ecuaci\'on. Como la matriz $P$ tiene todos sus elementos no n
 
 Esto se debe a que la matriz $P$, cuando la columna tiene elementos distintos de 0 entonces cumple que la suma de los elementos de la columna es igual a 1.
 
-Por lo tanto, para mismos valores de $j$ ambos lados de la ecuaci\'on valen lo mismo, entonces puedo asegurar que son iguales. Y con esto demuestro que utilizar el Algoritmo 1 de Kamvar es equivalente a resolver $P_{2}x = y$
-
+Por lo tanto, para mismos valores de $j$ ambos lados de la ecuaci\'on valen lo mismo, entonces puedo asegurar que son iguales. Y con esto demuestro que utilizar el Algoritmo 1 de Kamvar\cite{Kamvar2003} es equivalente a resolver $P_{2}x = y$
