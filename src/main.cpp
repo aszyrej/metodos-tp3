@@ -6,12 +6,13 @@ using namespace std;
 int main(int argc, char **argv)
 {
 	PageRank* p = new PageRank(cin);
-	
-	p->mostrar(cout);
-	
+		
 	p->hallarMatrizP();
+	vector<double> eigenvector = p->power_method();
+	///end punto 1 y 2
 	
-	p->mostrar(cout);
+	
+	
 	
 	delete p;
 	return 0;

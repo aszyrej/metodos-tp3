@@ -10,16 +10,17 @@ class SparseMatrix{
 	public:
 		SparseMatrix(std::istream& is);
 		double elem(int i, int j);
+		
 		void trasponer();
+		
 		std::vector<double> multiplicarXvector(std::vector<double>& v);
 		void multiplicarXescalar(double x);
-		void mostrar(std::ostream& os);
+
 		void calcularP();
 		
+		void mostrar(std::ostream& os);
+		
 	private:
-		//vector<double> values;
-		//vector<int> columns;
-		//vector<int> rowIndex;
 		int n;					//cuadrada
 		int cant_nonzero;
 		

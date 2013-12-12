@@ -11,8 +11,8 @@ void PageRank::hallarMatrizP(){
 	in_graph->trasponer();				//P
 }
 
-void PageRank::power_method(){
-
+vector<double> PageRank::power_method(){
+	
 }
 
 void PageRank::aitken_extrapolation(){
