@@ -11,11 +11,14 @@ class PageRank{
 		PageRank(std::istream & is);
 		std::vector<double> power_method();
 		//void aitken_extrapolation();
-		std::vector<double> quadratic_extrapolation(std::vector<double>&, std::vector<double>&, std::vector<double>&, std::vector<double>&);
+		std::vector<double> quadratic_extrapolation(std::vector<double>& x_kmenos3, std::vector<double>& x_kmenos2, std::vector<double>& x_kmenos1, std::vector<double>& x_k);
+		std::vector<double> quadratic_extrapolation_method();
 		void mostrar(std::ostream & os);
 		void hallarMatrizP();
+		void generar_cP();
 		
-		
+		int cant_nodos(){ return n; }
+		int cant_links(){ return links; }
 		
 		
 	private:
