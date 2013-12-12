@@ -4,14 +4,14 @@
 #include "../inc/SparseMatrix.h"
 #include <iostream>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 class PageRank{
 	public: 
 		PageRank(std::istream & is);
 		std::vector<double> power_method();
-		void aitken_extrapolation();
-		void quadratic_extrapolation();
+		//void aitken_extrapolation();
+		std::vector<double> quadratic_extrapolation(std::vector<double>&, std::vector<double>&, std::vector<double>&, std::vector<double>&);
 		void mostrar(std::ostream & os);
 		void hallarMatrizP();
 		
@@ -23,11 +23,12 @@ class PageRank{
 		SparseMatrix *in_graph; //ESPARSA. connection graph
 		double epsilon,c;
 		std::vector<double> _rank;			//eigenvector of M asociated with eigenvalue = 1
+		std::vector<double> v;
 		
-		double norm_uno(vector<double>& y);
-		vector<double> sumaVectores(vector<double>& x,vector<double>& y);
-		vector<double> vectorXescalar(vector<double>& v , double w));
-		vector<double> restaVectores(vector<double>& y,vector<double>& x);
+		double norm_uno(std::vector<double> y);
+		std::vector<double> sumaVectores(std::vector<double>& x,std::vector<double> y);
+		std::vector<double> vectorXescalar(std::vector<double>& v , double w);
+		std::vector<double> restaVectores(std::vector<double>& y,std::vector<double>& x);
 };
 
 #endif
