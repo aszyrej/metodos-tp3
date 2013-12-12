@@ -25,6 +25,7 @@ void imprimirResultado(ostream& os ,vector<pair<int, double> >& v){
 
 int main(int argc, char **argv)
 {
+	/** /
 	PageRank* p = new PageRank(cin);
 		
 	p->hallarMatrizP();
@@ -50,4 +51,30 @@ int main(int argc, char **argv)
 	delete eigenvector;
 	delete result;
 	return 0;
+	/ **/
+	
+	///debug Matrix
+	/**/
+	
+	Matrix* m = new Matrix(cin);
+	
+	m->mostrar(cout);		
+	
+	cout << endl;
+	pair<Matrix*,Matrix*> qr;
+	qr = m->factorizarQR();
+	
+	qr.first->mostrar(cout);		
+	
+	cout << endl;
+	
+	qr.second->mostrar(cout);		
+	
+	cout << endl;
+	
+	delete qr.first;
+	delete qr.second;
+	delete m;
+	return 0;
+	/**/
 }

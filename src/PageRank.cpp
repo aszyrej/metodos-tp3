@@ -53,7 +53,7 @@ std::vector<double> PageRank::quadratic_extrapolation(std::vector<double>&, std:
 	vector<vector<double> >* ys = new 	vector<vector<double> >();
 	
 	for(int i = 0; i<3 ; i++){
-		(*ys)
+	//GO	(*ys);
 	}
 	
 	return res;

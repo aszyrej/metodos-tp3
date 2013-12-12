@@ -2,6 +2,7 @@
 #define __PAGERANK_H__
 
 #include "../inc/SparseMatrix.h"
+#include "../inc/Matrix.h"
 #include <iostream>
 #include <vector>
 #include <cmath>
