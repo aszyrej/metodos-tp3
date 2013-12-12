@@ -1,0 +1,77 @@
+\subsection{Correctitud del Algoritmo 1 de Kamvar} 
+Seg\'un Kamvar et al. se puede reducir el problema de $(P_{2})x = y$ a realizar el siguiente c\'alculo:
+
+	$a = cPx$
+
+	$b = ||x||_{1} - ||a||_{1}$
+
+	$y = a + bv$
+
+Veamos que eso es correcto desarrollando $(P_{2})x$.
+
+\begin{align}
+	& P_{2}x = [cP_{1} + (1-c)E]x = [c(P + D) + (1-c)E]x = cPx + cDx + Ex -cEx \nonumber \\
+	& \implies cPx + cDx + Ex -cEx = y= cPx +bv 
+\end{align}
+
+Se puede observar en (1) que ya logramos que se cumpla el primer t\'ermino. Veamos ahora que  
+
+\begin{align*}
+	cDx + Ex -cEx &= bv \\
+	cvd^{t}x + v[1]^{t}x - cv[1]^{t}x &= bv
+\end{align*}
+
+Como $d^{t}x$ y $[1]^{t}x$ son escalares, puedo moverlos a la izquierda del producto
+
+\begin{align}
+	(cd^{t}x)v + ([1]^{t}x)v - (c[1]^{t}x)v &= bv \nonumber\\
+	(cd^{t}x +[1]^{t}x - c[1]^{t}x)v &= bv
+\end{align}
+
+Entonces, por (2) quiero ver que:
+\begin{align}
+	(cd^{t}x +[1]^{t}x - c[1]^{t}x) = b = ||x||_{1} - ||a||_{1}
+\end{align}
+Se puede observar que como x es un vector de probabilidades entonces todas sus coordenadas son no negativas, y por lo tanto $[1]^{t}x = ||x||_{1}.$
+
+Reemplazo esto en la ecuaci\'on (3)
+
+\begin{align}
+(cd^{t}x +[1]^{t}x - c[1]^{t}x) &= [1]^{t}x - ||cPx||_{1} \nonumber\\
+(cd^{t}x-c[1]^{t}x) &= -||cPx||_{1} \nonumber\\
+-c([1]^{t}x-d^{t}x) &= -c||Px||_{1} \nonumber\\
+([1]^{t} -d^{t})x &= ||Px||_{1} = \left(\sum_{i=i}^{n}[fila_{i}(P)]x\right) = \left(\sum_{i=i}^{n}(fila_{i}(P))\right)x
+\end{align}
+
+Entonces bastar\'ia con ver que, $\forall$ $ 1 \leq j \leq n$:
+
+\begin{align}
+	([1]^{t} -d^{t})_{j} = \left(\sum_{i=i}^{n}(fila_{i}(P))\right)_{j}
+\end{align}
+
+Analicemos (5) por separado.
+
+Primer lado de la ecuaci\'on. Siendo $d_{out}(k)$ el n\'umero de vecinos de la p\'agina $k$.
+\[
+	([1]^{t} -d^{t})_{j} = 
+	1 - d_{j} = 
+	\begin{cases}
+		1 & \text{si }d_{j} = 0 \iff d_{out}(j) \neq 0 \\
+		0 & \text{si no}
+	\end{cases}
+\]
+
+Segundo lado de la ecuaci\'on. Como la matriz $P$ tiene todos sus elementos no negativos entonces vale:
+
+\[
+	\left(\sum_{i=i}^{n}(fila_{i}(P))\right)_{j} = ||columna_{j}(P)||_{1} =
+		\begin{cases}
+		1 & \text{si la p\'agina $i$ tiene links salientes } \iff d_{out}(j) \neq 0 \\
+		0 & \text{si no}
+	\end{cases}
+\]
+
+Esto se debe a que la matriz $P$, cuando la columna tiene elementos distintos de 0 entonces cumple que la suma de los elementos de la columna es igual a 1.
+
+Por lo tanto, para mismos valores de $j$ ambos lados de la ecuaci\'on valen lo mismo, entonces puedo asegurar que son iguales. Y con esto demuestro que utilizar el Algoritmo 1 de Kamvar es equivalente a resolver $P_{2}x = y$
+
