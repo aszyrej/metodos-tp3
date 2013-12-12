@@ -8,7 +8,7 @@
 
 class SparseMatrix{
 	public:
-		SparseMatrix(std::istream& is);
+		SparseMatrix(std::istream& is, int, int);
 		double elem(int i, int j);
 		
 		void trasponer();

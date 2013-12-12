@@ -2,9 +2,9 @@
 
 using namespace std;
 
-SparseMatrix::SparseMatrix(istream& is){
-	is >> n;			//num paginas
-	is >> cant_nonzero;	//num links
+SparseMatrix::SparseMatrix(istream& is, int nodos, int links){
+	n = nodos;			//num paginas
+	cant_nonzero = links;	//num links
 	
 	list<pair<double,int> > l;
 	for(int i = 0; i < n; i++){

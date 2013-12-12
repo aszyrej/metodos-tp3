@@ -8,15 +8,16 @@
 class PageRank{
 	public: 
 		PageRank(std::istream & is);
-		vector<double> power_method();
+		std::vector<double> power_method();
 		void aitken_extrapolation();
 		void quadratic_extrapolation();
 		void mostrar(std::ostream & os);
 		void hallarMatrizP();
 		
 	private:
+		int n,links;
 		SparseMatrix *in_graph; //ESPARSA. connection graph
-			
+		double epsilon;
 		std::vector<double> _rank;			//eigenvector of M asociated with eigenvalue = 1
 };
 

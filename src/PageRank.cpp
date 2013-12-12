@@ -3,7 +3,12 @@
 using namespace std;		
 		
 PageRank::PageRank(istream& is){
-	in_graph = new SparseMatrix(is); 	//W traspuesta
+	is >> n;
+	is >> links;
+	
+	in_graph = new SparseMatrix(is,n,links); 	//W traspuesta
+	
+	epsilon = 0.0000000001;
 }
 
 void PageRank::hallarMatrizP(){
@@ -12,7 +17,14 @@ void PageRank::hallarMatrizP(){
 }
 
 vector<double> PageRank::power_method(){
+	double delta = 999;
+	vector<double> x;
+	for (int i = 0; i < n; i++) x.push_back(1.0/n);
+	do{
+		
+	}while(delta < epsilon);
 	
+	return x;
 }
 
 void PageRank::aitken_extrapolation(){
