@@ -48,7 +48,7 @@ vector<double> PageRank::power_method(){
 
 //void PageRank::aitken_extrapolation(){
 
-vector<double> quadratic_extrapolation(vector<double>& x_kmenos3, vector<double>& x_kmenos2, vector<double>& x_kmenos1, vector<double>& x_k){
+vector<double> PageRank::quadratic_extrapolation(vector<double>& x_kmenos3, vector<double>& x_kmenos2, vector<double>& x_kmenos1, vector<double>& x_k){
 	vector<double> res;
 	vector<vector<double> > ys;
 	
