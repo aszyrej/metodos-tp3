@@ -33,18 +33,20 @@ int main(int argc, char **argv)
 	///begin parte 1
 	/**/
 	/**/
-	//~ vector<double>* eigenvector = new vector<double>();
-	//~ *eigenvector = p->power_method();
+	 vector<double>* eigenvector = new vector<double>();
+	 *eigenvector = p->power_method();
 	
 	/*imprime resultados*/
 	
-	/*vector<pair<int, double> >* result = new vector<pair<int, double> >();
+	vector<pair<int, double> >* result = new vector<pair<int, double> >();
 	(*result) = makePairs((*eigenvector));
 	sort(result->begin(),result->end(),cmp);
-	imprimirResultado(cout,*result);*/
 	
-	//~ delete eigenvector;
-	//~ delete result;
+	cout << (*result)[0].second - (*result)[result->size()-1].second << endl;
+	//~ imprimirResultado(cout,*result);
+	
+	delete eigenvector;
+	delete result;
 	/**/
 	///end punto 1 y 2
 	//~ cout << endl;	
