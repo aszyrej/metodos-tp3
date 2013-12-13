@@ -9,7 +9,7 @@ PageRank::PageRank(istream& is){
 	in_graph = new SparseMatrix(is,n,links); 	//W traspuesta
 	
 	for (int i = 0; i < n; i++) v.push_back(1.0/n);
-	epsilon = 1e-5;
+	epsilon = 1e-6;
 	c = 1;
 }
 
@@ -42,7 +42,7 @@ vector<double> PageRank::power_method(){
 		i++;
 		if(i%200 == 0) cout << "delta : " << delta << endl;
 	}while(!(delta < epsilon));
-	
+	cout << "iteracion final " << i << endl;
 	return x;
 }
 
@@ -110,18 +110,22 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		x_kmenos1 = x_k;
 		x_k = y;
 				
-		if((i>=3)){// && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
+		if((i>=3) && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
 			x_k = quadratic_extrapolation(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
-			//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));
+			x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
 		}
 		
 		i++;			//luego del if.
 		
 		if(i%200 == 0) cout << "delta : " << delta << endl;
-	//}while(!(delta < epsilon));
-	}while(i < 200);
-	
-	//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));	
+	}while(!(delta < epsilon));
+	//~ }while(i <= 3);
+	//~ cout << endl << norm_dos(x_k) << endl;
+	//~ cout << endl << norm_uno(x_k) << endl;
+	//~ x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
+	//~ cout << endl << norm_dos(x_k) << endl;	
+	//~ cout << endl << norm_uno(x_k) << endl;	
+	cout << endl << "iteracion final " << i << endl;	
 	return x_k;
 }
 

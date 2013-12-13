@@ -25,7 +25,7 @@ void imprimirResultado(ostream& os ,vector<pair<int, double> >& v){
 
 int main(int argc, char **argv)
 {
-	/**/
+	
 	PageRank* p = new PageRank(cin);
 		
 	p->hallarMatrizP();
@@ -33,6 +33,9 @@ int main(int argc, char **argv)
 	
 	p->generar_cP();		//P = cP
 	
+	///begin parte 1
+	
+	/** /
 	*eigenvector = p->power_method();
 	
 	vector<pair<int, double> >* result = new vector<pair<int, double> >();
@@ -43,22 +46,16 @@ int main(int argc, char **argv)
 	
 	imprimirResultado(cout,*result);
 	
-//	delete eigenvector;
-//	delete result;
-	
+	delete eigenvector;
+	delete result;
+	/**/
 	///end punto 1 y 2
+	cout << endl;	
 	///begin punto 3
-	cout << endl;
+	
 	vector<double>* eigenvector2 = new vector<double>();
 	*eigenvector2 = p->quadratic_extrapolation_method();
 	
-	//
-	double escalar = (*eigenvector)[0] / (*eigenvector2)[0];
-	for(int i = 0; i < (int)eigenvector2->size(); i++){
-		(*eigenvector2)[i] = (*eigenvector2)[i] * escalar;
-	}
-	//
-	cout << endl;
 	vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
 	
 	(*result2) = makePairs((*eigenvector2));
@@ -70,17 +67,13 @@ int main(int argc, char **argv)
 	delete eigenvector2;
 	delete result2;
 	
-	delete eigenvector;
-	delete result;
-
-	
 	///end punto 3
 	
 	delete p;
 	
 	return 0;
-	/**/
 	
+	/**/
 	///debug Matrix
 	/** /
 	
