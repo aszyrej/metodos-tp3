@@ -10,11 +10,16 @@ using namespace std;
 class Matrix{
 	public:
 		Matrix(vector<double>& y1, vector<double>& y2);
+		Matrix(vector<double>& y1);
 		Matrix(istream& is);
 		Matrix(int n);
 		Matrix(int n, int m);
 		Matrix(const Matrix& m);
 		double elem(int i, int j);
+		
+		//debug
+		Matrix trasponer();
+		
 		
 		Matrix productoMatrices(Matrix& m1, Matrix& m2);
 		Matrix productoMatrices(Matrix& m1);

@@ -7,8 +7,22 @@ using namespace std;
 Matrix::Matrix(vector<double>& y1, vector<double>& y2){
 	filas = (int) y1.size();
 	columnas = 2;
-	A.push_back(y1);
-	A.push_back(y2);
+	vector<double> v;
+	for(int i = 0; i<filas; i++){
+		A.push_back(v);
+		A[i].push_back(y1[i]);
+		A[i].push_back(y2[i]);
+	}
+}
+
+Matrix::Matrix(vector<double>& y1){
+	filas = (int) y1.size();
+	columnas = 1;
+	vector<double> v;
+	for(int i = 0; i<filas; i++){
+		A.push_back(v);
+		A[i].push_back(y1[i]);
+	}
 }
 
 Matrix::Matrix(istream& is){
@@ -164,7 +178,7 @@ pair<Matrix*,Matrix*> Matrix::factorizarQR(){
 	u.A[0][0] = 0;
 	
 	for(int i = 1; i < filas; i++){
-		u.A[i][0] = this->A[i][1];
+		u.A[i][0] = R.A[i][1];
 		//u_t.A[0][i] = this->A[i][1];
 	}
 	
@@ -176,6 +190,7 @@ pair<Matrix*,Matrix*> Matrix::factorizarQR(){
 	}
 	
 	uu_t = productoMatrices(u,u_t);
+	//uu_t.mostrar(cout);
 	uu_t = multiplicarXescalar(uu_t,2); //2uu_t
 	Matrix Q2 = Matrix(filas); //I^nxn
 	Q2 = restaMatrices(Q2,uu_t);
@@ -202,4 +217,13 @@ void Matrix::mostrar(ostream& os){
 		os << " ]" << endl;
 	}
 	os << endl;
+}
+Matrix Matrix::trasponer(){
+	Matrix res = Matrix(columnas,filas);
+	for(int i = 0; i < columnas; i++){
+		for(int j = 0; j < filas; j++){
+			res.A[i][j] = this->A[j][i];
+		}
+	}
+	return res;
 }

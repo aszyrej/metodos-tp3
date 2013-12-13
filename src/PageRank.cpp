@@ -48,14 +48,23 @@ vector<double> PageRank::power_method(){
 
 //void PageRank::aitken_extrapolation(){
 
-std::vector<double> PageRank::quadratic_extrapolation(std::vector<double>&, std::vector<double>&, std::vector<double>&, std::vector<double>&){
+vector<double> quadratic_extrapolation(vector<double>& x_kmenos3, vector<double>& x_kmenos2, vector<double>& x_kmenos1, vector<double>& x_k){
 	vector<double> res;
-	vector<vector<double> >* ys = new 	vector<vector<double> >();
+	vector<vector<double> > ys;
 	
-	for(int i = 0; i<3 ; i++){
-	//GO	(*ys);
-	}
+	ys.push_back(restaVectores(x_kmenos2, x_kmenos3));
+	ys.push_back(restaVectores(x_kmenos1, x_kmenos3));
+	ys.push_back(restaVectores(x_k, x_kmenos3));
 	
+	Matrix Y = Matrix(ys[0],ys[1]);
+	pair<Matrix*,Matrix*> qr = Y.factorizarQR(); 	//encuentra Qtraspuesta y R
+	vector<double> y_k = vectorXescalar(ys[2],(-1));
+	
+	Matrix Qt_por_y = Matrix(y_k);
+	Qt_por_y = Qt_por_y.productoMatrices(*(qr.first),Qt_por_y);
+	
+	delete qr.first;
+	delete qr.second;
 	return res;
 }
 
