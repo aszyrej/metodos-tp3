@@ -10,7 +10,7 @@ PageRank::PageRank(istream& is){
 	
 	for (int i = 0; i < n; i++) v.push_back(1.0/n);
 	epsilon = 1e-6;
-	c = 1;
+	c = 0.80;
 }
 
 void PageRank::hallarMatrizP(){
@@ -40,9 +40,9 @@ vector<double> PageRank::power_method(){
 		delta = norm_uno(restaVectores(y,x));
 		x = y;
 		i++;
-		if(i%200 == 0) cout << "delta : " << delta << endl;
+		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
 	}while(!(delta < epsilon));
-	cout << "iteracion final " << i << endl;
+	cout << i << endl;
 	return x;
 }
 
@@ -156,7 +156,7 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		
 		i++;			//luego del if.
 		
-		if(i%200 == 0) cout << "delta : " << delta << endl;
+		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
 	}while(!(delta < epsilon));
 	//~ }while(i <= 3);
 	//~ cout << endl << norm_dos(x_k) << endl;
@@ -164,7 +164,7 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 	//~ x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
 	//~ cout << endl << norm_dos(x_k) << endl;	
 	//~ cout << endl << norm_uno(x_k) << endl;	
-	cout << endl << "iteracion final " << i << endl;	
+	cout << i << endl;	
 	return x_k;
 }
 
