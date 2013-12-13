@@ -22,12 +22,17 @@ class Matrix{
 		
 		
 		Matrix productoMatrices(Matrix& m1, Matrix& m2);
-		Matrix productoMatrices(Matrix& m1);
+		Matrix productoMatrices(Matrix& m1); //m1 * this
 		Matrix multiplicarXescalar(Matrix& m1, double escalar);
 		Matrix restaMatrices(Matrix& m1, Matrix& m2);
+		Matrix restaMatrices(Matrix& m1); //this - m1
 		pair<Matrix*,Matrix*> factorizarQR();
+		pair<Matrix*,Matrix*> factorizarQRopt(vector<double>& y_t);
 		
 		double norma_dos(); //Uso: Matriz vector, n filas 1 columna... seria norma_dos de vectores dentro del modulo matriz
+		
+		int dame_filas(){ return filas; } 
+		int dame_columnas(){ return columnas; }
 		
 		void mostrar(ostream& os);
 		Matrix cargar(istream& is);
