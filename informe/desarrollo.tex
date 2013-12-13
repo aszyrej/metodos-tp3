@@ -1,3 +1,6 @@
+\subsection{Implementaci\'on de matriz esparsa.}
+\input{sparse.tex}
+
 \subsection{M\'etodo de la potencia optimizado}
 
 El m\'etodo de la potencia \cite[Secci\'on 9.3]{Burden} es un algoritmo que me permite hallar el m\'aximo autovalor de una matriz, junto a su autovector. La idea principal del m\'etodo es multiplicar un vector sucesivas veces por una matriz. El resultado de realizar esto es que el vector original se transforma seg\'un los autovalores de la matriz y se orienta seg\'un los autovectores de la misma. Si existe un autovalor que es dominante, o sea, es m\'as grande que el resto de los dem\'as, es intuitivo pensar que el vector que es multiplicado se transforme seg\'un ese autovalor y apunte a la direcci\'on de dicho autovector. Ahora, como sabemos que el autovalor dominante de la matriz $P_{2}$ es 1 sabemos que el vector no se va a transformar y lo \'unico que va a suceder es que se va a orientar hacia el autovector asociado al autovalor 1, justamente lo que queremos hallar. Sin embargo, cada iteraci\'on del m\'etodo de la potencia involucra una multiplicaci\'on de matriz con vector y es una operaci\'on costosa en tiempo de procesamiento. Ser\'ia conveniente hallar una forma de reducir ese costo.
@@ -138,6 +141,12 @@ Se observa que $Y$ es un sistema sobredeterminado ya que hay m\'as filas que col
 
 Y esto resulta un sistema f\'acil para resolver utilizando \emph{backwards-substitution}.
 
-Uno de los m\'etodos vistos en la materia para obtener la factorizaci\'on QR fue el m\'etodo de \emph{Householder} que me permite relfejar ortogonalmente las columnas de $Y$ y as\'i ir obteniendo la matriz triangular superior $R$. Se puede observar que como la matriz $Y$ tiene solo 2 columnas entonces en 2 pasos de \emph{Householder} se obtiene la $R$ deseada.
+Uno de los m\'etodos vistos en la materia para obtener la factorizaci\'on QR fue el m\'etodo de \emph{Householder} que me permite reflejar ortogonalmente las columnas de $Y$ y as\'i ir obteniendo la matriz triangular superior $R$. Se puede observar que como la matriz $Y$ tiene solo 2 columnas entonces en 2 pasos de \emph{Householder} se obtiene la $R$ deseada. El problema es la dimensi\'on de $Q$. Al ser $n$ muy grande (que es lo esperado), calcularla en base al producto de $Q_1$ (primer paso de \emph{Householder}) y $Q_2$ (segundo paso de \emph{Householder}) es muy costoso en cuanto a recursos de memoria. Con \emph{web-Stanford} como entrada, la factorizaci\'on $QR$ cuelga el sistema ya que se queda sin memoria. 
+
+Es por esto que implementamos \emph{Householder eficiente}, donde buscamos obtener $R$ y $-Q^{t}y^{(k)}$ a trav\'es de sucesivas multiplicaciones del tipo Matriz-Vector, y resta de matrices. Evitar el almacenamiento en memoria y producto de matrices de $n \times n$ es importantisimo en el contexto de este trabajo, ya que hablamos de un \'orden de $O(n^3)$ para el producto y $O(2*n^2)$ en memoria.
+
+A continuaci\'on, el primer paso de \emph{Householder eficiente}. El segundo es an\'alogo.
+
+
 
 Volviendo al problema de hallar $P_{2}x = y$ 

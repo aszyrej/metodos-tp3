@@ -1,5 +1,3 @@
-
-
 Dado el inmenso tama\~no de la Web en general y considerando que el algoritmo de PageRank puede darse para un subconjunto muy grande de esta Web es necesario contemplar los requisitos de espacio f\'isico intr\'insecos a nuestro problema. As\i mismo, visto que trabajamos con matrices esparsas, fue necesario crear un m\'odulo que tome ventaja de esta propiedad, y que de esta manera minimice el espacio requerido.
 
 
@@ -11,8 +9,8 @@ Una primera aproximaci\'on fue basarnos en el formato Yale para matrices esparsa
 	\item JA : n\'umero de columna para cada valor de A.
 \end{itemize}
 
-Este formato parec\'ia ahorrar una cantidad considerable de espacio en memoria, pero surg\'ian problemas a medida que aparec\'ian filas que no conten\'ian ning\'un valor distinto de cero, algo que puede suceder tranquilamente. De repente el arreglo IA se volvía inconsistente y dejaba de tener sentido.
+Este formato parec\'ia ahorrar una cantidad considerable de espacio en memoria, pero surg\'ian problemas a medida que aparec\'ian filas que no conten\'ian ning\'un valor distinto de cero, algo que puede suceder tranquilamente. De repente el arreglo IA se volv\'ia inconsistente y dejaba de tener sentido.
 %yale format out
 
 
-Finalmente decidimos implementar SparseMatrix en base a un vector de listas, donde cada lista representa una fila (puede ser vacia) y cuyos elementos, de existir, son pares <valor,columna>. No s\'olo simplific\'o la implementaci\'on evitando as\'i mismo el absurdo almacenamiento de los valores nulos, sino que tambi\'en mejora el tiempo de ejecuci\'on para la multiplicaci\'on Matriz-Vector, dado que únicamente se toman en consideración los valores no nulos de cada fila y cada uno viene acompañado del \'indice del valor en el vector con el cual de lo debe multiplicar.
+Finalmente decidimos implementar SparseMatrix en base a un vector de listas, donde cada lista representa una fila (puede ser vacia) y cuyos elementos, de existir, son pares <valor,columna>. No s\'olo simplific\'o la implementaci\'on evitando as\'i mismo el absurdo almacenamiento de los valores nulos, sino que tambi\'en mejora el tiempo de ejecuci\'on para la multiplicaci\'on Matriz-Vector, dado que \'unicamente se toman en consideraci\'on los valores no nulos de cada fila y cada uno viene acompa\~nado del \'indice del valor en el vector con el cual de lo debe multiplicar.
