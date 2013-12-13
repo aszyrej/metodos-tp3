@@ -150,6 +150,17 @@ Matrix Matrix::restaMatrices(Matrix& m1, Matrix& m2){
 	}
 	return res;	
 }
+
+Matrix Matrix::restaMatrices(Matrix& m1){
+	Matrix res = Matrix(m1);
+	for(int i = 0; i < res.filas; i++){
+		for(int j = 0; j < res.columnas; j++){
+			res.A[i][j] = this->A[i][j] - m1.A[i][j];
+		}	
+	}
+	return res;	
+}
+
 pair<Matrix*,Matrix*> Matrix::factorizarQR(){
 	pair<Matrix*,Matrix*> res;
 	
@@ -171,7 +182,7 @@ pair<Matrix*,Matrix*> Matrix::factorizarQR(){
 	Matrix Q1 = Matrix(filas); //I^nxn
 	Q1 = restaMatrices(Q1,uu_t);
 	
-	Matrix R = productoMatrices(Q1);
+	Matrix R = productoMatrices(Q1);			//Q1 * this  -> Q1 * A
 	
 	///fin primer paso
 	
@@ -203,6 +214,100 @@ pair<Matrix*,Matrix*> Matrix::factorizarQR(){
 	
 	Matrix* R_res = new Matrix(R);
 	Matrix* Qt_res = new Matrix(Q_t);
+	res = make_pair(Qt_res, R_res);
+	
+	return res;
+}
+
+pair<Matrix*,Matrix*> Matrix::factorizarQRopt(vector<double>& y_k){ //recibe menos y_k
+	pair<Matrix*,Matrix*> res; //quiero devolver Qt_por_menos_y_k y R
+	
+	Matrix u = Matrix(filas,1);
+	Matrix u_t = Matrix(1,filas);
+	
+	for(int i = 0; i < filas; i++){
+		u.A[i][0] = this->A[i][0];
+	}
+	u.A[0][0] = u.A[0][0] - u.norma_dos();
+	u = multiplicarXescalar(u,1.0/u.norma_dos());
+	
+	for(int i = 0; i < filas; i++){
+		u_t.A[0][i] = u.A[i][0];
+	}
+	//tenemos y_k, u y u_t
+	Matrix Y_k = Matrix(y_k);
+	
+	//b'
+	Matrix u_t_Y_k = productoMatrices(u_t,Y_k); //u_t_por_Y_k
+	u_t_Y_k = productoMatrices(u,u_t_Y_k); //u_u_t_por_Y_k
+	u_t_Y_k = multiplicarXescalar(u_t_Y_k,2);
+	u_t_Y_k = restaMatrices(Y_k,u_t_Y_k);
+	///b' = u_t_Y_k
+	//R1:
+	Matrix u_t_por_A = productoMatrices(u_t);
+	u_t_por_A = productoMatrices(u,u_t_por_A); //u_u_t_por_A
+	u_t_por_A = multiplicarXescalar(u_t_por_A,2); //2u_u_t_por_A
+	u_t_por_A = restaMatrices(u_t_por_A); 
+	///R1 = u_t_por_A
+	
+	
+	
+	//~ Matrix uu_t = productoMatrices(u,u_t);
+	//~ uu_t = multiplicarXescalar(uu_t,2); //2uu_t
+	//~ Matrix Q1 = Matrix(filas); //I^nxn
+	//~ Q1 = restaMatrices(Q1,uu_t);
+	//~ 
+	//~ Matrix R = productoMatrices(Q1);			//Q1 * this  -> Q1 * A
+	
+	
+	
+	
+	///fin primer paso
+	
+	u.A[0][0] = 0;
+	
+	for(int i = 1; i < filas; i++){
+		u.A[i][0] = u_t_por_A.A[i][1];
+		//u_t.A[0][i] = this->A[i][1];
+	}
+	
+	u.A[1][0] = u.A[1][0] - u.norma_dos();
+	u = multiplicarXescalar(u,1.0/u.norma_dos());
+	
+	for(int i = 0; i < filas; i++){
+		u_t.A[0][i] = u.A[i][0];
+	}
+	
+	//tenemos b' y R1
+	///b' = u_t_Y_k
+	///R1 = u_t_por_A
+	//b''
+	Matrix b = productoMatrices(u_t, u_t_Y_k); //u_t_por_Y_k
+	b = productoMatrices(u,b); //u_u_t_por_Y_k
+	b = multiplicarXescalar(b,2);
+	b = restaMatrices(u_t_Y_k,b);
+
+	//R:
+	Matrix R = productoMatrices(u_t,u_t_por_A);
+	R = productoMatrices(u,R); //u_u_t_por_A
+	R = multiplicarXescalar(R,2); //2u_u_t_por_A
+	R = restaMatrices(u_t_por_A,R); 
+
+	
+	//~ uu_t = productoMatrices(u,u_t);
+	//~ //uu_t.mostrar(cout);
+	//~ uu_t = multiplicarXescalar(uu_t,2); //2uu_t
+	//~ Matrix Q2 = Matrix(filas); //I^nxn
+	//~ Q2 = restaMatrices(Q2,uu_t);
+	//~ 
+	//~ R = productoMatrices(Q2,R);
+	
+	///fin segundo paso
+	
+	//~ Matrix Q_t = productoMatrices(Q2,Q1);
+	
+	Matrix* R_res = new Matrix(R);
+	Matrix* Qt_res = new Matrix(b);
 	res = make_pair(Qt_res, R_res);
 	
 	return res;

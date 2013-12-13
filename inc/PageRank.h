@@ -14,6 +14,7 @@ class PageRank{
 		std::vector<double> power_method();
 		//void aitken_extrapolation();
 		std::vector<double> quadratic_extrapolation(std::vector<double>& x_kmenos3, std::vector<double>& x_kmenos2, std::vector<double>& x_kmenos1, std::vector<double>& x_k);
+		std::vector<double> quadratic_extrapolation_opt(std::vector<double>& x_kmenos3, std::vector<double>& x_kmenos2, std::vector<double>& x_kmenos1, std::vector<double>& x_k);
 		std::vector<double> quadratic_extrapolation_method();
 		void mostrar(std::ostream & os);
 		void hallarMatrizP();

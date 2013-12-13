@@ -9,8 +9,8 @@ PageRank::PageRank(istream& is){
 	in_graph = new SparseMatrix(is,n,links); 	//W traspuesta
 	
 	for (int i = 0; i < n; i++) v.push_back(1.0/n);
-	epsilon = 1e-5;
-	c = 1;
+	epsilon = 1e-6;
+	c = 0.80;
 }
 
 void PageRank::hallarMatrizP(){
@@ -40,9 +40,9 @@ vector<double> PageRank::power_method(){
 		delta = norm_uno(restaVectores(y,x));
 		x = y;
 		i++;
-		if(i%200 == 0) cout << "delta : " << delta << endl;
+		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
 	}while(!(delta < epsilon));
-	
+	cout << i << endl;
 	return x;
 }
 
@@ -62,6 +62,45 @@ vector<double> PageRank::quadratic_extrapolation(vector<double>& x_kmenos3, vect
 	
 	Matrix Qt_por_y = Matrix(y_k);
 	Qt_por_y = Qt_por_y.productoMatrices(*(qr.first),Qt_por_y);
+	double gamma1;
+	double gamma2;
+	double gamma3 = 1.0;
+	
+	gamma2 = Qt_por_y.elem(1,0) / (*(qr.second)).elem(1,1);
+	gamma1 = (Qt_por_y.elem(0,0) - ((*(qr.second)).elem(0,1) * gamma2)) / (*(qr.second)).elem(0,0);
+	
+	double beta0 = gamma1 + gamma2 + gamma3;
+	double beta1 = gamma2 + gamma3;
+	double beta2 = gamma3;
+	
+	vector<double> v1 = vectorXescalar(x_kmenos2,beta0);
+	vector<double> v2 = vectorXescalar(x_kmenos1,beta1);
+	vector<double> v3 = vectorXescalar(x_k,beta2);
+	
+	res = sumaVectores(v3,sumaVectores(v1,v2));
+	
+	delete qr.first;
+	delete qr.second;
+	return res;
+}
+
+vector<double> PageRank::quadratic_extrapolation_opt(vector<double>& x_kmenos3, vector<double>& x_kmenos2, vector<double>& x_kmenos1, vector<double>& x_k){
+	vector<double> res;
+	vector<vector<double> > ys;
+	
+	ys.push_back(restaVectores(x_kmenos2, x_kmenos3));
+	ys.push_back(restaVectores(x_kmenos1, x_kmenos3));
+	ys.push_back(restaVectores(x_k, x_kmenos3));
+	
+	Matrix Y = Matrix(ys[0],ys[1]);
+	vector<double> y_k = vectorXescalar(ys[2],(-1));
+	
+	pair<Matrix*,Matrix*> qr = Y.factorizarQRopt(y_k); 	//encuentra Qtraspuesta*-y_k <matriz vector nx1> y R <matriz nx2>
+	
+	
+	//~ Matrix Qt_por_y = Matrix(y_k);
+	//~ Qt_por_y = Qt_por_y.productoMatrices(*(qr.first),Qt_por_y);
+	Matrix Qt_por_y = *(qr.first);
 	double gamma1;
 	double gamma2;
 	double gamma3 = 1.0;
@@ -110,18 +149,22 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		x_kmenos1 = x_k;
 		x_k = y;
 				
-		if((i>=3)){// && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
-			x_k = quadratic_extrapolation(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
-			//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));
+		if((i>=3) && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
+			x_k = quadratic_extrapolation_opt(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
+			x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
 		}
 		
 		i++;			//luego del if.
 		
-		if(i%200 == 0) cout << "delta : " << delta << endl;
-	//}while(!(delta < epsilon));
-	}while(i < 200);
-	
-	//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));	
+		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
+	}while(!(delta < epsilon));
+	//~ }while(i <= 3);
+	//~ cout << endl << norm_dos(x_k) << endl;
+	//~ cout << endl << norm_uno(x_k) << endl;
+	//~ x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
+	//~ cout << endl << norm_dos(x_k) << endl;	
+	//~ cout << endl << norm_uno(x_k) << endl;	
+	cout << i << endl;	
 	return x_k;
 }
 

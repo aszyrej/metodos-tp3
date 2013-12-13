@@ -26,87 +26,92 @@ void imprimirResultado(ostream& os ,vector<pair<int, double> >& v){
 int main(int argc, char **argv)
 {
 	/**/
-	PageRank* p = new PageRank(cin);
-		
+	PageRank* p = new PageRank(cin);	
 	p->hallarMatrizP();
-	vector<double>* eigenvector = new vector<double>();
-	
 	p->generar_cP();		//P = cP
 	
+	///begin parte 1
+	/**/
+	/**/
+	vector<double>* eigenvector = new vector<double>();
 	*eigenvector = p->power_method();
 	
-	vector<pair<int, double> >* result = new vector<pair<int, double> >();
+	/*imprime resultados*/
 	
+	/*vector<pair<int, double> >* result = new vector<pair<int, double> >();
 	(*result) = makePairs((*eigenvector));
-	
 	sort(result->begin(),result->end(),cmp);
+	imprimirResultado(cout,*result);*/
 	
-	imprimirResultado(cout,*result);
-	
-//	delete eigenvector;
-//	delete result;
-	
+	delete eigenvector;
+	//~ delete result;
+	/**/
 	///end punto 1 y 2
+	//~ cout << endl;	
 	///begin punto 3
-	cout << endl;
+	
 	vector<double>* eigenvector2 = new vector<double>();
 	*eigenvector2 = p->quadratic_extrapolation_method();
 	
-	//
-	double escalar = (*eigenvector)[0] / (*eigenvector2)[0];
-	for(int i = 0; i < (int)eigenvector2->size(); i++){
-		(*eigenvector2)[i] = (*eigenvector2)[i] * escalar;
-	}
-	//
-	cout << endl;
-	vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
-	
+	/*imprime resultados*/
+	/*vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
 	(*result2) = makePairs((*eigenvector2));
-	
 	sort(result2->begin(),result2->end(),cmp);
-	
-	imprimirResultado(cout,*result2);
+	imprimirResultado(cout,*result2);*/
 	
 	delete eigenvector2;
-	delete result2;
-	
-	delete eigenvector;
-	delete result;
-
+	//~ delete result2;
 	
 	///end punto 3
 	
 	delete p;
 	
 	return 0;
-	/**/
 	
+	/**/
 	///debug Matrix
 	/** /
 	
 	Matrix* m = new Matrix(cin);
 	
 	m->mostrar(cout);		
-	
+	vector<double> nada;
+	for(int i = 0; i < m->dame_filas(); i++) nada.push_back(2);
 	cout << endl;
 	pair<Matrix*,Matrix*> qr;
+	pair<Matrix*,Matrix*> qr2;
 	qr = m->factorizarQR();
+	qr.second->mostrar(cout);	
 	
-	qr.first->mostrar(cout);		
+	qr2 = m->factorizarQRopt(nada);
+	
+	//qr.first->mostrar(cout);
 	
 	cout << endl;
 	
 	qr.second->mostrar(cout);		
+	cout << endl;
+	qr2.second->mostrar(cout);		
 	
 	cout << endl;
+	cout << "ahora vemos Q" << endl;
+	cout << endl;
 	
-	Matrix prod = (qr.first)->trasponer();
-	prod = m->productoMatrices(prod,*(qr.second));
+	Matrix menosyt = Matrix(nada);
+	Matrix Q = qr.first->productoMatrices(*(qr.first),menosyt);
+	Q.mostrar(cout);
+	cout << endl;	
+	qr2.first->mostrar(cout);
 	
-	prod.mostrar(cout);
+	//Matrix prod = (qr.first)->trasponer();
+	//prod = m->productoMatrices(prod,*(qr.second));
+	
+	//prod.mostrar(cout);
 	
 	delete qr.first;
+	delete qr2.first;
 	delete qr.second;
+	delete qr2.second;
 	delete m;
 	return 0;
 	/ **/
