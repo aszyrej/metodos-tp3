@@ -32,12 +32,12 @@ Los resultados fueron los siguientes:
     }
 \end{center}
 \begin{center}
-c = 0.80. Epsilon = $10^{-10}$.
+Tabla 1: c = 0.80. Epsilon = $10^{-10}$.
 \end{center}
 
 ~
 
-Si bien la cantidad de iteraciones totales disminuye con extrapolac\'ion cuadr\'atica respecto del m\'etodo cl\'asico de la potencia, puede apreciarse en la tabla que su periodicidad en la aplicaci\'on no modifica en gran medida la cantidad total de iteraciones para el mismo m\'etodo, contrario a lo que cre\'iamos inicialmente. 
+Si bien la cantidad de iteraciones totales disminuye con extrapolac\'ion cuadr\'atica respecto del m\'etodo cl\'asico de la potencia, puede apreciarse en la tabla 1 que su periodicidad en la aplicaci\'on no modifica en gran medida la cantidad total de iteraciones para el mismo m\'etodo, contrario a lo que cre\'iamos inicialmente. 
 
 Sin embargo, fue notorio durante el trayecto de este experimento que los tiempos iban cambiando a medida que se produc\'ian menos llamadas a extrapolaci\'on cuadr\'atica, lo cual era de esperarse debido al costo dicho m\'etodo.
 
@@ -53,7 +53,7 @@ A continuaci\'on, los resultados obtenidos respecto del tiempo total de ejecuci\
     \begin{tabular}{| l | l |}
     \hline
     Distancia entre iteraciones con extrapolaci\'on & Tiempo (en millones de ciclos) \\ \hline
-    7 & \textcolor{red}{\~21} \\ \hline
+    7 & \textcolor{red}{21} \\ \hline
     10 & 16.4 \\ \hline
     15 & 12.06 \\ \hline
     25 & 9 \\ \hline
@@ -64,14 +64,14 @@ A continuaci\'on, los resultados obtenidos respecto del tiempo total de ejecuci\
     }
 \end{center}
 \begin{center}
-c = 0.80. Epsilon = $10^{-10}$. Tiempos medidos en base a $tiempo.h$ otorgado por la c\'atedra de Orga2.
+Tabla 2: c = 0.80. Epsilon = $10^{-10}$. Tiempos medidos en base a $tiempo.h$ otorgado por la c\'atedra de Orga2.
 \end{center}
 
 Dado que el algoritmo de power-method-with-quadratic-extrapolation es costoso en terminos de tiempo con grafos de entrada suficientemente grandes, se realizaron s\'olo 5 repeticiones de las mediciones para acortar tiempos. 
 
 Podemos apreciar el gran costo de aplicar el m\'etodo de extrapolaci\'on cuadr\'atica de forma $demasiado$ peri\'odica viendo el tiempo total que tarda el algoritmo si las iteraciones de extrapolaci\'on son muy cercanas.
 
-Observando la tabla podemos ver que el tiempo disminuye a medida que se aplica el m\'etodo de manera mas distanciada, acelerando la convergencia de manera periodica sin retrasar el tiempo total con sucesivas llamadas al costoso proceso de extrapolaci\'on cuadr\'atica.
+Observando la tabla 2 podemos ver que el tiempo disminuye a medida que se aplica el m\'etodo de manera mas distanciada, acelerando la convergencia de manera periodica sin retrasar el tiempo total con sucesivas llamadas al costoso proceso de extrapolaci\'on cuadr\'atica.
 
 
 

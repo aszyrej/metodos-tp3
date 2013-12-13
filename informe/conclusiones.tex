@@ -1,0 +1,9 @@
+Durante el transcurso de este trabajo fuimos analizando el m\'etodo de la potencia en contraposici\'on con la mejora de extrapolaci\'on cuadr\'atica. Los resultados obtenidos no siempre fueron los esperados, pero en lineas generales entendemos que la extrapolaci\'on cuadr\'atica es realmente una mejora al momento de hallar el autovector asociado al m\'aximo autovalor $\lambda = 1$ de una matriz con la propiedad de ser una cadena de Markov, siempre y cuando se lo aplique de manera peri\'odica no demasiado consecutiva.
+
+Al trabajar con grafos de mayor tama\~no en cuanto a cantidad de nodos, ambos m\'etodos se comportan como es de esperarse. Siempre el m\'etodo que implementa la extrapolaci\'on cuadr\'atica converge m\'as rapido que el m\'etodo cl\'asico de la potencia en cuanto a cantidad de iteraciones.
+
+Sin embargo, en cuanto a tiempos, si la extrapolaci\'on se produce de forma muy consecutiva puede provocar un overhead temporal que ralentizar\'ia el tiempo de ejecuci\'on total. Lo mismo no sucede en terminos de convergencia en cuanto a cantidad de iteraciones. Variar la periodicidad de la extrapolaci\'on no influye en la cantidad total de iteraciones. Consideramos que una distancia de entre 10 y 20 iteraciones de por medio entre llamadas al $extrapolation\_method$ es \'optima para un mejor resultado temporal.
+
+En cuanto al valor de $c$, creemos que fijarlo en un valor muy cercano al 1 es deseable para un correcto modelaje del navegador random. Con un valor de 0.80 / 0.85 creemos que sin perder peso en la matriz original podemos incluir el concepto de teletransportaci\'on y es por eso que fijamos en ese valor dicha variable.
+
+%saludos y gracias.
