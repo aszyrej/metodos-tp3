@@ -28,11 +28,8 @@ vector<double> PageRank::power_method(){
 	vector<double> y;
 	double w;
 
-	//in_graph->multiplicarXescalar(c); 		//P = cP already done in main
-	// in_graph = cP
 	int i = 0;
 	do{
-		//x = Ax
 		y = in_graph->multiplicarXvector(x);
 		w = norm_uno(x) - norm_uno(y);
 		y = sumaVectores(y,vectorXescalar(v,w));
@@ -40,13 +37,10 @@ vector<double> PageRank::power_method(){
 		delta = norm_uno(restaVectores(y,x));
 		x = y;
 		i++;
-		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
 	}while(!(delta < epsilon));
-	cout << i << endl;
+	//~ cout << i << endl;
 	return x;
 }
-
-//void PageRank::aitken_extrapolation(){
 
 vector<double> PageRank::quadratic_extrapolation(vector<double>& x_kmenos3, vector<double>& x_kmenos2, vector<double>& x_kmenos1, vector<double>& x_k){
 	vector<double> res;
@@ -97,9 +91,6 @@ vector<double> PageRank::quadratic_extrapolation_opt(vector<double>& x_kmenos3, 
 	
 	pair<Matrix*,Matrix*> qr = Y.factorizarQRopt(y_k); 	//encuentra Qtraspuesta*-y_k <matriz vector nx1> y R <matriz nx2>
 	
-	
-	//~ Matrix Qt_por_y = Matrix(y_k);
-	//~ Qt_por_y = Qt_por_y.productoMatrices(*(qr.first),Qt_por_y);
 	Matrix Qt_por_y = *(qr.first);
 	double gamma1;
 	double gamma2;
@@ -128,16 +119,13 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 	vector<double> x_k = v;
 	vector<double> x_kmenos1 = x_k;
 	vector<double> x_kmenos2 = x_k;
-	vector<double> x_kmenos3 = x_k;
+	vector<double> x_kmenos3 = x_k;	
 	vector<double> y;
 	double w;
 
-	//in_graph->multiplicarXescalar(c); 		//P = cP already done in main
-	// in_graph = cP
 	int i = 0;
 	
 	do{
-		//x = Ax
 		y = in_graph->multiplicarXvector(x_k);
 		w = norm_uno(x_k) - norm_uno(y);
 		y = sumaVectores(y,vectorXescalar(v,w));
@@ -149,22 +137,14 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		x_kmenos1 = x_k;
 		x_k = y;
 				
-		if((i>=3) && (i%50 == 0)){	//chequear guarda. Variar segun experimentacion
+		if((i>=3) && (i%50 == 0)){
 			x_k = quadratic_extrapolation_opt(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
 			x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
 		}
-		
-		i++;			//luego del if.
-		
-		//~ if(i%200 == 0) cout << "delta : " << delta << endl;
+		i++;		
+
 	}while(!(delta < epsilon));
-	//~ }while(i <= 3);
-	//~ cout << endl << norm_dos(x_k) << endl;
-	//~ cout << endl << norm_uno(x_k) << endl;
-	//~ x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
-	//~ cout << endl << norm_dos(x_k) << endl;	
-	//~ cout << endl << norm_uno(x_k) << endl;	
-	cout << i << endl;	
+	//~ cout << i << endl;	
 	return x_k;
 }
 

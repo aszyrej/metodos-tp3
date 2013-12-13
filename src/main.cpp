@@ -32,18 +32,18 @@ int main(int argc, char **argv)
 	
 	///begin parte 1
 	/**/
-	/**/
+	/** /
 	 vector<double>* eigenvector = new vector<double>();
 	 *eigenvector = p->power_method();
 	
-	/*imprime resultados*/
+	//imprime resultados/
 	
 	vector<pair<int, double> >* result = new vector<pair<int, double> >();
 	(*result) = makePairs((*eigenvector));
 	sort(result->begin(),result->end(),cmp);
 	
-	cout << (*result)[0].second - (*result)[result->size()-1].second << endl;
-	//~ imprimirResultado(cout,*result);
+	//~ cout << (*result)[0].second - (*result)[result->size()-1].second << endl;
+	imprimirResultado(cout,*result);
 	
 	delete eigenvector;
 	delete result;
@@ -56,10 +56,10 @@ int main(int argc, char **argv)
 	*eigenvector2 = p->quadratic_extrapolation_method();
 	
 	/*imprime resultados*/
-	/*vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
+	vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
 	(*result2) = makePairs((*eigenvector2));
 	sort(result2->begin(),result2->end(),cmp);
-	imprimirResultado(cout,*result2);*/
+	imprimirResultado(cout,*result2);
 	
 	delete eigenvector2;
 	//~ delete result2;
