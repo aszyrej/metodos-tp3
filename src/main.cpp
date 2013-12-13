@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 	///begin parte 1
 	/**/
 	/**/
-	vector<double>* eigenvector = new vector<double>();
-	*eigenvector = p->power_method();
+	//~ vector<double>* eigenvector = new vector<double>();
+	//~ *eigenvector = p->power_method();
 	
 	/*imprime resultados*/
 	
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 	sort(result->begin(),result->end(),cmp);
 	imprimirResultado(cout,*result);*/
 	
-	delete eigenvector;
+	//~ delete eigenvector;
 	//~ delete result;
 	/**/
 	///end punto 1 y 2

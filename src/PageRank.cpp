@@ -149,7 +149,7 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		x_kmenos1 = x_k;
 		x_k = y;
 				
-		if((i>=3) && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
+		if((i>=3) && (i%50 == 0)){	//chequear guarda. Variar segun experimentacion
 			x_k = quadratic_extrapolation_opt(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
 			x_k = vectorXescalar(x_k, (1.0 / norm_uno(x_k)));
 		}

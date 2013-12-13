@@ -141,12 +141,12 @@ Se observa que $Y$ es un sistema sobredeterminado ya que hay m\'as filas que col
 
 Y esto resulta un sistema f\'acil para resolver utilizando \emph{backwards-substitution}.
 
-Uno de los m\'etodos vistos en la materia para obtener la factorizaci\'on QR fue el m\'etodo de \emph{Householder} que me permite reflejar ortogonalmente las columnas de $Y$ y as\'i ir obteniendo la matriz triangular superior $R$. Se puede observar que como la matriz $Y$ tiene solo 2 columnas entonces en 2 pasos de \emph{Householder} se obtiene la $R$ deseada. El problema es la dimensi\'on de $Q$. Al ser $n$ muy grande (que es lo esperado), calcularla en base al producto de $Q_1$ (primer paso de \emph{Householder}) y $Q_2$ (segundo paso de \emph{Householder}) es muy costoso en cuanto a recursos de memoria. Con \emph{web-Stanford} como entrada, la factorizaci\'on $QR$ cuelga el sistema ya que se queda sin memoria. 
+Uno de los m\'etodos vistos en la materia para obtener la factorizaci\'on QR fue el m\'etodo de \emph{Householder} \cite{Burden} que me permite reflejar ortogonalmente las columnas de $Y$ y as\'i ir obteniendo la matriz triangular superior $R$. Se puede observar que como la matriz $Y$ tiene solo 2 columnas entonces en 2 pasos de \emph{Householder} se obtiene la $R$ deseada. El problema es la dimensi\'on de $Q$. Al ser $n$ muy grande (que es lo esperado), calcularla en base al producto de $Q_1$ (primer paso de \emph{Householder}) y $Q_2$ (segundo paso de \emph{Householder}) es muy costoso en cuanto a recursos de memoria. Con \emph{web-Stanford} como entrada, la factorizaci\'on $QR$ cuelga el sistema ya que se queda sin memoria. 
 
 Es por esto que implementamos \emph{Householder eficiente}, donde buscamos obtener $R$ y $-Q^{t}y^{(k)}$ a trav\'es de sucesivas multiplicaciones del tipo Matriz-Vector, y resta de matrices. Evitar el almacenamiento en memoria y producto de matrices de $n \times n$ es importantisimo en el contexto de este trabajo, ya que hablamos de un \'orden de $O(n^3)$ para el producto y $O(2*n^2)$ en memoria.
 
 A continuaci\'on, el primer paso de \emph{Householder eficiente}. El segundo es an\'alogo.
 
+%acaaaaaaaa mata acaaaaa HH
 
-
-Volviendo al problema de hallar $P_{2}x = y$ 
+Volviendo al problema de hallar $P_{2}x = y$ %y acaaaa el pseudocode del otro

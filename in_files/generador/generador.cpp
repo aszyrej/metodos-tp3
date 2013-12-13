@@ -36,8 +36,8 @@ int main()
 			if (n!=j){
 				random = rand() % 10;
 				if (random<=1){
-					ss1 << n;
-					ss2 << j;
+					ss1 << n+1;
+					ss2 << j+1;
 					str1 = ss1.str();
 					str2 = ss2.str();
 					ss1.str("");
