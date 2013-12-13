@@ -139,6 +139,14 @@ Se observa que $Y$ es un sistema sobredeterminado ya que hay m\'as filas que col
 	R\gamma &=-Q^{t}y^{(k)}\\
 \end{align*}
 
+\begin{figure}[!h]
+	\begin{center}
+		  \includegraphics[scale = 0.5]{graficos/im_1.pdf}
+		  \caption{Sistema a resolver simplificado}
+		  \label{fig:contra1}
+	\end{center}
+\end{figure}
+\FloatBarrier
 Y esto resulta un sistema f\'acil para resolver utilizando \emph{backwards-substitution}.
 
 Uno de los m\'etodos vistos en la materia para obtener la factorizaci\'on QR fue el m\'etodo de \emph{Householder} \cite{Burden} que me permite reflejar ortogonalmente las columnas de $Y$ y as\'i ir obteniendo la matriz triangular superior $R$. Se puede observar que como la matriz $Y$ tiene solo 2 columnas entonces en 2 pasos de \emph{Householder} se obtiene la $R$ deseada. El problema es la dimensi\'on de $Q$. Al ser $n$ muy grande (que es lo esperado), calcularla en base al producto de $Q_1$ (primer paso de \emph{Householder}) y $Q_2$ (segundo paso de \emph{Householder}) es muy costoso en cuanto a recursos de memoria. Con \emph{web-Stanford} como entrada, la factorizaci\'on $QR$ cuelga el sistema ya que se queda sin memoria. 
@@ -147,6 +155,36 @@ Es por esto que implementamos \emph{Householder eficiente}, donde buscamos obten
 
 A continuaci\'on, el primer paso de \emph{Householder eficiente}. El segundo es an\'alogo.
 
-%acaaaaaaaa mata acaaaaa HH
+~
 
-Volviendo al problema de hallar $P_{2}x = y$ %y acaaaa el pseudocode del otro
+$(I - 2uu^{t})*A = (I - 2uu^{t})*b$
+
+$(A - 2uu^{t}A) = (b - 2uu^{t}b)$
+
+~
+
+Notemos que $u^{t}*b$ es un escalar (por lo que simplifica mucho las operaciones). Además no tenemos que multiplicar por la 
+identidad ya que el paso resulta trivial.
+
+Volviendo al problema de hallar $P_{2}x = y$, el algoritmo con la optimización es entonces: 
+
+~
+
+\begin{algorithmic}
+	\Function{power method with quadratic extrapolation}{}{ $= x^{(n)}$}
+		\State \textbf{vector} $x^{(0)} \gets v$
+		\State $k \gets 1$ \Repeat
+		\State $x_{k-3} \gets x_{k-2}$
+		\State $x_{k-2} \gets x_{k-1}$
+		\State $x_{k-1} \gets x_{k}$
+		\State $x^{(k)} \gets \text{Algoritmo 1}(x^{(k-1)})$
+		\If{someConditionAboutk}
+			\State $x^{(k)} \gets$ QuadraticExtrapolation($x_{k-3},x_{k-2},x_{k-1},x_{k}$)
+		\EndIf
+		\State $\delta \gets ||x^{(k)} - x^{(k-1)}||_{1}$ \Until $\delta < \epsilon$
+		\State \Return $x^{(k)}$
+	\EndFunction
+\end{algorithmic}
+
+
+
