@@ -62,6 +62,22 @@ vector<double> PageRank::quadratic_extrapolation(vector<double>& x_kmenos3, vect
 	
 	Matrix Qt_por_y = Matrix(y_k);
 	Qt_por_y = Qt_por_y.productoMatrices(*(qr.first),Qt_por_y);
+	double gamma1;
+	double gamma2;
+	double gamma3 = 1.0;
+	
+	gamma2 = Qt_por_y.elem(1,0) / (*(qr.second)).elem(1,1);
+	gamma1 = (Qt_por_y.elem(0,0) - ((*(qr.second)).elem(0,1) * gamma2)) / (*(qr.second)).elem(0,0);
+	
+	double beta0 = gamma1 + gamma2 + gamma3;
+	double beta1 = gamma2 + gamma3;
+	double beta2 = gamma3;
+	
+	vector<double> v1 = vectorXescalar(x_kmenos2,beta0);
+	vector<double> v2 = vectorXescalar(x_kmenos1,beta1);
+	vector<double> v3 = vectorXescalar(x_k,beta2);
+	
+	res = sumaVectores(v3,sumaVectores(v1,v2));
 	
 	delete qr.first;
 	delete qr.second;
@@ -94,15 +110,18 @@ vector<double> PageRank::quadratic_extrapolation_method(){
 		x_kmenos1 = x_k;
 		x_k = y;
 				
-		if((i>=3) && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
+		if((i>=3)){// && (i%10 == 0)){	//chequear guarda. Variar segun experimentacion
 			x_k = quadratic_extrapolation(x_kmenos3, x_kmenos2, x_kmenos1, x_k);
+			//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));
 		}
 		
 		i++;			//luego del if.
 		
 		if(i%200 == 0) cout << "delta : " << delta << endl;
-	}while(!(delta < epsilon));
+	//}while(!(delta < epsilon));
+	}while(i < 200);
 	
+	//x_k = vectorXescalar(x_k, (1.0 / norm_dos(x_k)));	
 	return x_k;
 }
 
@@ -118,6 +137,14 @@ double PageRank::norm_uno(vector<double> y){
 		res = res + abs(y[i]);
 	}
 	return res;
+}
+
+double PageRank::norm_dos(vector<double> y){
+	double res = 0;
+	for(unsigned int i = 0; i < y.size(); i++){
+		res = res + (y[i] * y[i]);
+	}
+	return sqrt(res);
 }
 
 vector<double> PageRank::sumaVectores(vector<double>& x,vector<double> y){

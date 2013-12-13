@@ -31,6 +31,7 @@ class PageRank{
 		std::vector<double> v;
 		
 		double norm_uno(std::vector<double> y);
+		double norm_dos(std::vector<double> y);
 		std::vector<double> sumaVectores(std::vector<double>& x,std::vector<double> y);
 		std::vector<double> vectorXescalar(std::vector<double>& v , double w);
 		std::vector<double> restaVectores(std::vector<double>& y,std::vector<double>& x);

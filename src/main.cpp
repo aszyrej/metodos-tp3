@@ -39,17 +39,45 @@ int main(int argc, char **argv)
 	
 	(*result) = makePairs((*eigenvector));
 	
-	sort((*result).begin(),(*result).end(),cmp);
+	sort(result->begin(),result->end(),cmp);
 	
 	imprimirResultado(cout,*result);
 	
+//	delete eigenvector;
+//	delete result;
+	
 	///end punto 1 y 2
+	///begin punto 3
+	cout << endl;
+	vector<double>* eigenvector2 = new vector<double>();
+	*eigenvector2 = p->quadratic_extrapolation_method();
 	
+	//
+	double escalar = (*eigenvector)[0] / (*eigenvector2)[0];
+	for(int i = 0; i < (int)eigenvector2->size(); i++){
+		(*eigenvector2)[i] = (*eigenvector2)[i] * escalar;
+	}
+	//
+	cout << endl;
+	vector<pair<int, double> >* result2 = new vector<pair<int, double> >();
 	
+	(*result2) = makePairs((*eigenvector2));
 	
-	delete p;
+	sort(result2->begin(),result2->end(),cmp);
+	
+	imprimirResultado(cout,*result2);
+	
+	delete eigenvector2;
+	delete result2;
+	
 	delete eigenvector;
 	delete result;
+
+	
+	///end punto 3
+	
+	delete p;
+	
 	return 0;
 	/**/
 	
